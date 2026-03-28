@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Color Tap & Copy</title>
+    
+    <link rel="icon" href="image_37.png">
+    <link rel="apple-touch-icon" href="image_37.png">
+
     <style>
         :root {
             --bg: #fff;
@@ -29,6 +33,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
@@ -37,21 +42,23 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            text-align: center;
         }
 
-        h1 { font-size: 1.5rem; margin: 0; text-align: center; font-weight: 800; }
-        p.desc { font-size: 0.9rem; margin: 0 0 5px; text-align: center; opacity: 0.8; }
+        h1 { font-size: 1.8rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
+        p.desc { font-size: 0.85rem; color: #666; font-weight: 500; margin-bottom: 5px; }
 
+        /* Preview Area */
         #preview {
             width: 100%;
             height: 100px;
             background-color: #ccc;
             border-radius: var(--radius);
-            border: 1px solid var(--accent);
+            border: 2px solid var(--accent);
             transition: background-color 0.1s;
         }
 
-        /* 1. Copy Button Alignment Fix */
+        /* 1. Copy Button Alignment (Fixed Width & Horizontal Lock) */
         .info-row {
             display: flex;
             gap: 10px;
@@ -60,34 +67,38 @@
 
         input {
             flex: 1;
-            min-width: 0; /* Prevent overflow */
+            min-width: 0;
             height: var(--h-standard);
             border-radius: var(--radius);
             border: none;
             background-color: var(--input-bg);
-            color: var(--main);
+            color: var(--main) !important;
             font-size: 1.2rem;
             font-weight: bold;
             text-align: center;
             outline: none;
+            /* iOS Fixes */
             -webkit-appearance: none;
-            -webkit-text-fill-color: var(--main);
+            -webkit-text-fill-color: var(--main) !important;
             opacity: 1 !important;
         }
 
-        button.copy-btn {
-            width: 100px; /* Fixed width to prevent jumping on "COPIED!" */
+        .copy-btn {
+            width: 100px;
             height: var(--h-standard);
             background-color: var(--main);
             color: #fff;
             border: none;
             border-radius: var(--radius);
             font-size: 0.9rem;
-            font-weight: bold;
+            font-weight: 800;
             cursor: pointer;
             flex-shrink: 0;
+            transition: 0.2s;
         }
+        .copy-btn:active { transform: scale(0.98); }
 
+        /* Grid Area */
         .grid-wrapper {
             width: 100%;
             touch-action: none; 
@@ -106,92 +117,92 @@
 
         .tile { aspect-ratio: 1/1; cursor: crosshair; }
 
-        /* 3. Footer Area (Image 4/5 Trace) */
-        .btn-group {
+        /* 3. Footer Area (Image 4 & 5 Trace) */
+        .footer-btns {
+            margin-top: 15px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 15px;
             width: 100%;
+            align-items: center;
         }
 
-        .btn-kofi {
-            background-color: var(--main);
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .btn-ath {
-            background-color: #fff;
-            color: var(--main);
-            border: 1px solid var(--accent);
-        }
-
-        .footer-btn {
+        .kofi-btn {
+            width: 100%;
             height: var(--h-standard);
+            background: var(--main);
+            color: #fff;
             border-radius: var(--radius);
-            font-weight: bold;
+            text-decoration: none;
+            font-weight: 800;
             font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .home-btn {
+            width: 60%;
+            background: #fff;
+            color: var(--main);
+            border: 1px solid var(--accent);
+            padding: 12px;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: 13px;
             cursor: pointer;
-            width: 100%;
-            border: none;
+        }
+
+        footer {
+            margin-top: 30px;
+            padding-bottom: 20px;
+            font-size: 11px;
+            color: #bbb;
+            line-height: 1.8;
         }
 
         /* 2. Install Modal (Image 3 Trace) */
-        .modal {
+        #modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
+            z-index: 1000;
         }
-
         .modal-content {
             background: #fff;
-            padding: 25px;
+            width: 85%;
+            max-width: 320px;
+            padding: 30px;
             border-radius: var(--radius);
-            width: 100%;
-            max-width: 340px;
-            position: relative;
             text-align: left;
+            position: relative;
         }
-
-        .close-x {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 20px;
-            cursor: pointer;
-            line-height: 1;
-            font-weight: bold;
-        }
-
-        .modal-content h2 { 
-            margin: 0 0 15px; 
-            font-size: 1.3rem; 
+        .modal-content h3 { 
+            margin-top: 0; 
+            font-size: 1.2rem; 
             display: flex; 
             align-items: center; 
-            gap: 8px;
+            gap: 8px; 
+            font-weight: 800;
         }
-
-        .modal-body { font-size: 0.95rem; line-height: 1.6; color: #444; }
-        .modal-body p { margin: 0 0 10px; }
-        .modal-body ul { list-style: none; padding: 0; margin: 0; }
-        .modal-body li { margin-bottom: 8px; }
-
-        footer {
-            margin-top: auto;
-            padding: 30px 0 20px;
-            font-size: 10px;
-            text-align: center;
-            color: #bbb;
-            line-height: 1.8;
+        .modal-content p { 
+            font-size: 0.95rem; 
+            font-weight: 600; 
+            line-height: 1.6; 
+            color: #333; 
+            margin: 15px 0; 
+        }
+        .close-x { 
+            position: absolute; 
+            top: 15px; 
+            right: 20px; 
+            font-size: 24px; 
+            color: #ccc; 
+            cursor: pointer; 
+            font-weight: bold;
         }
     </style>
 </head>
@@ -212,37 +223,32 @@
         <div id="colorGrid"></div>
     </div>
 
-    <div class="btn-group">
-        <a href="https://ko-fi.com/afrorakda" target="_blank" class="footer-btn btn-kofi">Buy me a coffee ☕</a>
-        <button class="footer-btn btn-ath" onclick="openModal()">Add to Home Screen</button>
+    <div class="footer-btns">
+        <a href="https://ko-fi.com/afrorakda" target="_blank" class="kofi-btn">Buy me a coffee ☕</a>
+        <button class="home-btn" onclick="document.getElementById('modal').style.display='flex'">Add to Home Screen</button>
     </div>
+
+    <footer>
+        <div>No login / No tracking / No ads / Browser only</div>
+        <div>Privacy Policy / afrorakda © 2026</div>
+    </footer>
 </div>
 
-<div id="athModal" class="modal">
-    <div class="modal-content">
-        <span class="close-x" onclick="closeModal()">&times;</span>
-        <h2>📱 Install</h2>
-        <div class="modal-body">
-            <p>Add to home screen.</p>
-            <ul>
-                <li>🍏 <strong>iPhone:</strong> Share > Add to Home Screen</li>
-                <li>🤖 <strong>Android:</strong> Menu > Add to home screen</li>
-            </ul>
-        </div>
+<div id="modal" onclick="this.style.display='none'">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-x" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+        <h3>📱 Install</h3>
+        <p>Add to your home screen.</p>
+        <p>🍏 <strong>iPhone (Safari):</strong><br>Tap Share, then Add to Home Screen.</p>
+        <p>🤖 <strong>Android (Chrome):</strong><br>Tap Menu (⋮), then Add to Home Screen.</p>
     </div>
 </div>
-
-<footer>
-    No login / No tracking / No ads / Browser only<br>
-    Privacy Policy / afrorakda © 2026
-</footer>
 
 <script>
     const colorGrid = document.getElementById('colorGrid');
     const preview = document.getElementById('preview');
     const hexDisplay = document.getElementById('hexDisplay');
     const copyBtn = document.getElementById('copyBtn');
-    const modal = document.getElementById('athModal');
 
     const rows = 12;
     const cols = 20;
@@ -293,14 +299,9 @@
         hexDisplay.select();
         hexDisplay.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(hexDisplay.value);
-        const originalText = "COPY";
         copyBtn.innerText = "COPIED!";
-        setTimeout(() => copyBtn.innerText = originalText, 1000);
+        setTimeout(() => copyBtn.innerText = "COPY", 1000);
     }
-
-    function openModal() { modal.style.display = 'flex'; }
-    function closeModal() { modal.style.display = 'none'; }
-    window.onclick = (e) => { if (e.target == modal) closeModal(); }
 
     colorGrid.addEventListener('mousedown', updateColor);
     colorGrid.addEventListener('mouseover', (e) => { if(e.buttons === 1) updateColor(e); });
