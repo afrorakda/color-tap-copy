@@ -15,7 +15,7 @@
             --accent: #eee;
             --input-bg: #fafafa;
             --radius: 15px;
-            --h-standard: 54px;
+            --h-standard: 52px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -57,33 +57,32 @@
             border-radius: 12px;
         }
 
-        .subtitle { font-size: 0.8rem; color: #666; font-weight: 800; margin-bottom: 10px; text-align: left; }
+        .subtitle { font-size: 0.8rem; color: #666; font-weight: 800; margin-bottom: 8px; text-align: left; }
 
         #preview {
             width: 100%;
-            height: 60px;
+            height: 54px; /* 指示通り大きくせず、むしろ引き締める */
             background-color: #ccc;
             border-radius: var(--radius);
             border: 2px solid var(--accent);
-            transition: background-color 0.1s;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .info-row {
             display: flex;
             gap: 8px;
             width: 100%;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         input {
-            width: 130px; /* 横幅を減らしてコピーボタンを優先 */
+            width: 120px;
             height: var(--h-standard);
             border-radius: var(--radius);
             border: 2px solid var(--accent);
             background-color: var(--input-bg);
             color: var(--main) !important;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             text-align: center;
             outline: none;
@@ -93,7 +92,7 @@
         }
 
         .copy-btn {
-            flex: 1; /* 残りの幅をすべて使う */
+            flex: 1;
             height: var(--h-standard);
             background-color: var(--main);
             color: #fff;
@@ -103,18 +102,16 @@
             font-weight: 900;
             cursor: pointer;
             -webkit-text-fill-color: #fff;
-            transition: background 0.2s;
         }
-        .copy-btn:active { transform: scale(0.98); }
 
         .grid-wrapper {
-            flex: 1; /* 縦の余白をすべてグリッドに */
+            flex: 1;
             touch-action: none; 
             background: var(--bg);
             padding: 4px;
             border-radius: var(--radius);
             border: 2px solid var(--accent);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
         }
 
@@ -128,7 +125,6 @@
 
         .tile { aspect-ratio: 1/1; cursor: crosshair; }
 
-        /* Footer buttons in a row */
         .footer-btns {
             display: flex;
             gap: 8px;
@@ -182,7 +178,7 @@
         <h1>Tap & Copy</h1>
         <a href="https://afrorakda.github.io/" class="hub-link">🏠 Hub</a>
     </header>
-    <p class="subtitle">Get Hex instantly.</p>
+    <p class="subtitle">Quick color picker.</p>
 
     <div id="preview"></div>
     
@@ -223,7 +219,7 @@
     const hexDisplay = document.getElementById('hexDisplay');
     const copyBtn = document.getElementById('copyBtn');
 
-    const rows = 15; // 行数を増やしてパレットを拡大
+    const rows = 18; // さらに行数を増やして密度をアップ
     const cols = 20;
 
     function generateGrid() {
@@ -277,7 +273,7 @@
         setTimeout(() => {
             copyBtn.innerText = "COPY";
             copyBtn.style.background = "var(--main)";
-        }, 1000);
+        }, 800);
     }
 
     function showModal() { document.getElementById('modal').style.display = 'flex'; }
