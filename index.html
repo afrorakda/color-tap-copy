@@ -15,7 +15,7 @@
             --accent: #eee;
             --input-bg: #fafafa;
             --radius: 15px;
-            --h-standard: 52px;
+            --h-standard: 54px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -57,32 +57,33 @@
             border-radius: 12px;
         }
 
-        .subtitle { font-size: 0.8rem; color: #666; font-weight: 800; margin-bottom: 8px; text-align: left; }
+        .subtitle { font-size: 0.8rem; color: #666; font-weight: 800; margin-bottom: 10px; text-align: left; }
 
         #preview {
             width: 100%;
-            height: 54px; /* 指示通り大きくせず、むしろ引き締める */
+            height: 60px;
             background-color: #ccc;
             border-radius: var(--radius);
             border: 2px solid var(--accent);
-            margin-bottom: 8px;
+            transition: background-color 0.1s;
+            margin-bottom: 10px;
         }
 
         .info-row {
             display: flex;
             gap: 8px;
             width: 100%;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         input {
-            width: 120px;
+            width: 130px;
             height: var(--h-standard);
             border-radius: var(--radius);
             border: 2px solid var(--accent);
             background-color: var(--input-bg);
             color: var(--main) !important;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 900;
             text-align: center;
             outline: none;
@@ -102,7 +103,9 @@
             font-weight: 900;
             cursor: pointer;
             -webkit-text-fill-color: #fff;
+            transition: background 0.2s;
         }
+        .copy-btn:active { transform: scale(0.98); }
 
         .grid-wrapper {
             flex: 1;
@@ -111,19 +114,24 @@
             padding: 4px;
             border-radius: var(--radius);
             border: 2px solid var(--accent);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
+            overflow: hidden; /* はみ出しを物理的にカット */
         }
 
         #colorGrid {
             display: grid;
-            grid-template-columns: repeat(20, 1fr);
+            grid-template-columns: repeat(20, 1fr); /* 20等分 */
             gap: 1px;
             width: 100%;
             height: 100%;
         }
 
-        .tile { aspect-ratio: 1/1; cursor: crosshair; }
+        .tile { 
+            width: 100%; 
+            min-height: 20px; /* タップしやすさを確保 */
+            cursor: crosshair; 
+        }
 
         .footer-btns {
             display: flex;
@@ -219,7 +227,7 @@
     const hexDisplay = document.getElementById('hexDisplay');
     const copyBtn = document.getElementById('copyBtn');
 
-    const rows = 18; // さらに行数を増やして密度をアップ
+    const rows = 18; 
     const cols = 20;
 
     function generateGrid() {
