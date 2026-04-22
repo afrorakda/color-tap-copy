@@ -28,7 +28,7 @@
             justify-content: center;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
-            padding: env(safe-area-inset-top, 20px) 20px env(safe-area-inset-bottom, 20px) 20px;
+            padding: env(safe-area-inset-top, 15px) 15px env(safe-area-inset-bottom, 15px) 15px;
         }
 
         .container {
@@ -45,7 +45,7 @@
             margin-bottom: 5px;
         }
 
-        h1 { font-size: 1.8rem; font-weight: 900; letter-spacing: -1.5px; }
+        h1 { font-size: 1.6rem; font-weight: 900; letter-spacing: -1.5px; }
         
         .hub-link {
             text-decoration: none;
@@ -53,37 +53,37 @@
             font-weight: 800;
             color: var(--main);
             background: var(--accent);
-            padding: 8px 14px;
+            padding: 8px 12px;
             border-radius: 12px;
         }
 
-        .subtitle { font-size: 0.9rem; color: #666; font-weight: 800; margin-bottom: 15px; text-align: left; }
+        .subtitle { font-size: 0.8rem; color: #666; font-weight: 800; margin-bottom: 10px; text-align: left; }
 
         #preview {
             width: 100%;
-            height: 100px;
+            height: 60px;
             background-color: #ccc;
             border-radius: var(--radius);
             border: 2px solid var(--accent);
             transition: background-color 0.1s;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .info-row {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         input {
-            flex: 1;
+            width: 130px; /* 横幅を減らしてコピーボタンを優先 */
             height: var(--h-standard);
             border-radius: var(--radius);
-            border: none;
+            border: 2px solid var(--accent);
             background-color: var(--input-bg);
             color: var(--main) !important;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 900;
             text-align: center;
             outline: none;
@@ -93,53 +93,74 @@
         }
 
         .copy-btn {
-            width: 100px;
+            flex: 1; /* 残りの幅をすべて使う */
             height: var(--h-standard);
             background-color: var(--main);
             color: #fff;
             border: none;
             border-radius: var(--radius);
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 900;
             cursor: pointer;
             -webkit-text-fill-color: #fff;
+            transition: background 0.2s;
         }
-        .copy-btn:active { transform: scale(0.95); }
+        .copy-btn:active { transform: scale(0.98); }
 
         .grid-wrapper {
-            width: 100%;
+            flex: 1; /* 縦の余白をすべてグリッドに */
             touch-action: none; 
             background: var(--bg);
-            padding: 5px;
+            padding: 4px;
             border-radius: var(--radius);
             border: 2px solid var(--accent);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            display: flex;
         }
 
         #colorGrid {
             display: grid;
             grid-template-columns: repeat(20, 1fr);
-            gap: 2px;
+            gap: 1px;
             width: 100%;
+            height: 100%;
         }
 
         .tile { aspect-ratio: 1/1; cursor: crosshair; }
 
-        .footer-btns { margin-top: auto; padding: 15px 0; text-align: center; }
+        /* Footer buttons in a row */
+        .footer-btns {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
         .kofi-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            background: var(--main); color: #fff; width: 100%; max-width: 340px;
-            height: var(--h-standard); border-radius: var(--radius);
-            text-decoration: none; font-weight: 900; font-size: 1rem; margin-bottom: 12px;
+            flex: 1;
+            height: 48px;
+            background: var(--main);
+            color: #fff;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             -webkit-text-fill-color: #fff;
         }
         .home-btn {
-            display: block; width: 100%; max-width: 340px; margin: 0 auto; 
-            background: var(--accent); color: var(--main); border: none; 
-            padding: 14px; border-radius: var(--radius); font-weight: 800; font-size: 0.9rem; cursor: pointer;
+            flex: 1;
+            height: 48px;
+            background: var(--accent);
+            color: var(--main);
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
         }
 
-        footer { padding: 15px 0; text-align: center; font-size: 0.75rem; color: #999; line-height: 1.6; font-weight: 700; }
+        footer { text-align: center; font-size: 0.7rem; color: #999; line-height: 1.4; font-weight: 700; padding-bottom: 5px; }
         footer a { color: inherit; text-decoration: underline; }
 
         #modal {
@@ -151,7 +172,6 @@
             background: #fff; width: 90%; max-width: 320px; padding: 35px;
             border-radius: var(--radius); text-align: left; position: relative;
         }
-        .modal-content h3 { margin-bottom: 10px; font-weight: 900; }
         .close-x { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #ccc; cursor: pointer; font-weight: bold; }
     </style>
 </head>
@@ -162,7 +182,7 @@
         <h1>Tap & Copy</h1>
         <a href="https://afrorakda.github.io/" class="hub-link">🏠 Hub</a>
     </header>
-    <p class="subtitle">Tap or slide to get Hex code.</p>
+    <p class="subtitle">Get Hex instantly.</p>
 
     <div id="preview"></div>
     
@@ -177,7 +197,7 @@
 
     <div class="footer-btns">
         <a href="https://ko-fi.com/afrorakda" target="_blank" class="kofi-btn">☕️buy me a coffee</a>
-        <button class="home-btn" onclick="showModal()">Add to Home Screen</button>
+        <button class="home-btn" onclick="showModal()">Add Home</button>
     </div>
 
     <footer id="dynamicFooter">
@@ -191,8 +211,8 @@
         <span class="close-x" onclick="hideModal()">×</span>
         <h3 style="margin-bottom: 10px; font-weight: 900;">📱 Install</h3>
         <div style="font-size: 0.9rem; line-height: 1.6; font-weight: 700;">
-            <p>🍏 <strong>iPhone (Safari):</strong><br>Tap Share, then Add to Home Screen.</p>
-            <p style="margin-top:10px;">🤖 <strong>Android (Chrome):</strong><br>Tap Menu (⋮), then Add to Home Screen.</p>
+            <p>🍏 <strong>iPhone:</strong><br>Share > Add to Home Screen</p>
+            <p style="margin-top:10px;">🤖 <strong>Android:</strong><br>Menu (⋮) > Add to Home Screen</p>
         </div>
     </div>
 </div>
@@ -203,7 +223,7 @@
     const hexDisplay = document.getElementById('hexDisplay');
     const copyBtn = document.getElementById('copyBtn');
 
-    const rows = 12;
+    const rows = 15; // 行数を増やしてパレットを拡大
     const cols = 20;
 
     function generateGrid() {
@@ -276,7 +296,7 @@
     colorGrid.addEventListener('mousedown', updateColor);
     colorGrid.addEventListener('mouseover', (e) => { if(e.buttons === 1) updateColor(e); });
     colorGrid.addEventListener('touchstart', updateColor, {passive: false});
-    colorGrid.addEventListener('touchmove', updateColor, {passive: false});
+    colorGrid.addEventListener('touchmove', (e) => { e.preventDefault(); updateColor(e); }, {passive: false});
     copyBtn.addEventListener('click', copyHex);
 
     window.onload = loadFooter;
