@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Color Tap & Copy</title>
     
     <link rel="icon" href="./image_37.png">
@@ -18,35 +18,46 @@
             --h-standard: 54px;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 
         body {
-            margin: 0;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg);
             color: var(--main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
+            padding: env(safe-area-inset-top, 20px) 20px env(safe-area-inset-bottom, 20px) 20px;
         }
 
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            text-align: center;
         }
 
-        h1 { font-size: 1.8rem; font-weight: 800; margin: 0; letter-spacing: -1px; }
-        p.desc { font-size: 0.85rem; color: #666; font-weight: 500; margin-bottom: 5px; }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        h1 { font-size: 1.8rem; font-weight: 900; letter-spacing: -1.5px; }
+        
+        .hub-link {
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--main);
+            background: var(--accent);
+            padding: 8px 14px;
+            border-radius: 12px;
+        }
+
+        .subtitle { font-size: 0.9rem; color: #666; font-weight: 800; margin-bottom: 15px; text-align: left; }
 
         #preview {
             width: 100%;
@@ -55,24 +66,25 @@
             border-radius: var(--radius);
             border: 2px solid var(--accent);
             transition: background-color 0.1s;
+            margin-bottom: 15px;
         }
 
         .info-row {
             display: flex;
             gap: 10px;
             width: 100%;
+            margin-bottom: 15px;
         }
 
         input {
             flex: 1;
-            min-width: 0;
             height: var(--h-standard);
             border-radius: var(--radius);
             border: none;
             background-color: var(--input-bg);
             color: var(--main) !important;
-            font-size: 1.2rem;
-            font-weight: bold;
+            font-size: 1.4rem;
+            font-weight: 900;
             text-align: center;
             outline: none;
             -webkit-appearance: none;
@@ -88,10 +100,11 @@
             border: none;
             border-radius: var(--radius);
             font-size: 0.9rem;
-            font-weight: 800;
+            font-weight: 900;
             cursor: pointer;
-            flex-shrink: 0;
+            -webkit-text-fill-color: #fff;
         }
+        .copy-btn:active { transform: scale(0.95); }
 
         .grid-wrapper {
             width: 100%;
@@ -99,7 +112,8 @@
             background: var(--bg);
             padding: 5px;
             border-radius: var(--radius);
-            border: 1px solid var(--accent);
+            border: 2px solid var(--accent);
+            margin-bottom: 20px;
         }
 
         #colorGrid {
@@ -111,77 +125,44 @@
 
         .tile { aspect-ratio: 1/1; cursor: crosshair; }
 
-        .footer-btns {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-            align-items: center;
-        }
-
+        .footer-btns { margin-top: auto; padding: 15px 0; text-align: center; }
         .kofi-btn {
-            width: 100%;
-            height: var(--h-standard);
-            background: var(--main);
-            color: #fff;
-            border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--main); color: #fff; width: 100%; max-width: 340px;
+            height: var(--h-standard); border-radius: var(--radius);
+            text-decoration: none; font-weight: 900; font-size: 1rem; margin-bottom: 12px;
+            -webkit-text-fill-color: #fff;
         }
-
         .home-btn {
-            width: 60%;
-            background: #fff;
-            color: var(--main);
-            border: 1px solid var(--accent);
-            padding: 12px;
-            border-radius: var(--radius);
-            font-weight: 700;
-            font-size: 13px;
-            cursor: pointer;
+            display: block; width: 100%; max-width: 340px; margin: 0 auto; 
+            background: var(--accent); color: var(--main); border: none; 
+            padding: 14px; border-radius: var(--radius); font-weight: 800; font-size: 0.9rem; cursor: pointer;
         }
 
-        footer {
-            margin-top: 30px;
-            padding-bottom: 20px;
-            font-size: 11px;
-            color: #bbb;
-            line-height: 1.8;
-        }
+        footer { padding: 15px 0; text-align: center; font-size: 0.75rem; color: #999; line-height: 1.6; font-weight: 700; }
+        footer a { color: inherit; text-decoration: underline; }
 
         #modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000;
+            backdrop-filter: blur(4px);
         }
         .modal-content {
-            background: #fff;
-            width: 85%;
-            max-width: 320px;
-            padding: 30px;
-            border-radius: var(--radius);
-            text-align: left;
-            position: relative;
+            background: #fff; width: 90%; max-width: 320px; padding: 35px;
+            border-radius: var(--radius); text-align: left; position: relative;
         }
-        .modal-content h3 { margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; font-weight: 800; }
-        .modal-content p { font-size: 0.95rem; font-weight: 600; line-height: 1.6; color: #333; margin: 15px 0; }
-        .close-x { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #ccc; cursor: pointer; }
+        .modal-content h3 { margin-bottom: 10px; font-weight: 900; }
+        .close-x { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #ccc; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Color Tap & Copy</h1>
-    <p class="desc">Tap or slide to get Hex code instantly.</p>
+    <header>
+        <h1>Tap & Copy</h1>
+        <a href="https://afrorakda.github.io/" class="hub-link">🏠 Hub</a>
+    </header>
+    <p class="subtitle">Tap or slide to get Hex code.</p>
 
     <div id="preview"></div>
     
@@ -195,23 +176,24 @@
     </div>
 
     <div class="footer-btns">
-        <a href="https://ko-fi.com/afrorakda" target="_blank" class="kofi-btn">Buy me a coffee ☕</a>
-        <button class="home-btn" onclick="document.getElementById('modal').style.display='flex'">Add to Home Screen</button>
+        <a href="https://ko-fi.com/afrorakda" target="_blank" class="kofi-btn">☕️buy me a coffee</a>
+        <button class="home-btn" onclick="showModal()">Add to Home Screen</button>
     </div>
 
-    <footer>
-        <div>No login / No tracking / No ads / Browser only</div>
-        <div>Privacy Policy / afrorakda © 2026</div>
+    <footer id="dynamicFooter">
+        No login / No tracking / No ads / Browser only<br>
+        <a href="https://afrorakda.com/privacy/">Privacy Policy</a> / afrorakda © 2026
     </footer>
 </div>
 
-<div id="modal" onclick="this.style.display='none'">
+<div id="modal" onclick="hideModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="close-x" onclick="document.getElementById('modal').style.display='none'">&times;</span>
-        <h3>📱 Install</h3>
-        <p>Add to your home screen.</p>
-        <p>🍏 <strong>iPhone (Safari):</strong><br>Tap Share, then Add to Home Screen.</p>
-        <p>🤖 <strong>Android (Chrome):</strong><br>Tap Menu (⋮), then Add to Home Screen.</p>
+        <span class="close-x" onclick="hideModal()">×</span>
+        <h3 style="margin-bottom: 10px; font-weight: 900;">📱 Install</h3>
+        <div style="font-size: 0.9rem; line-height: 1.6; font-weight: 700;">
+            <p>🍏 <strong>iPhone (Safari):</strong><br>Tap Share, then Add to Home Screen.</p>
+            <p style="margin-top:10px;">🤖 <strong>Android (Chrome):</strong><br>Tap Menu (⋮), then Add to Home Screen.</p>
+        </div>
     </div>
 </div>
 
@@ -271,7 +253,24 @@
         hexDisplay.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(hexDisplay.value);
         copyBtn.innerText = "COPIED!";
-        setTimeout(() => copyBtn.innerText = "COPY", 1000);
+        copyBtn.style.background = "#27ae60";
+        setTimeout(() => {
+            copyBtn.innerText = "COPY";
+            copyBtn.style.background = "var(--main)";
+        }, 1000);
+    }
+
+    function showModal() { document.getElementById('modal').style.display = 'flex'; }
+    function hideModal() { document.getElementById('modal').style.display = 'none'; }
+
+    async function loadFooter() {
+        try {
+            const res = await fetch('footer.json');
+            if (res.ok) {
+                const data = await res.json();
+                if (data.footerHtml) document.getElementById('dynamicFooter').innerHTML = data.footerHtml;
+            }
+        } catch (e) {}
     }
 
     colorGrid.addEventListener('mousedown', updateColor);
@@ -280,6 +279,7 @@
     colorGrid.addEventListener('touchmove', updateColor, {passive: false});
     copyBtn.addEventListener('click', copyHex);
 
+    window.onload = loadFooter;
     generateGrid();
 </script>
 
