@@ -116,12 +116,12 @@
             border: 2px solid var(--accent);
             margin-bottom: 10px;
             display: flex;
-            overflow: hidden; /* はみ出しを物理的にカット */
+            overflow: hidden; /* 物理的なはみ出し防止 */
         }
 
         #colorGrid {
             display: grid;
-            grid-template-columns: repeat(20, 1fr); /* 20等分 */
+            grid-template-columns: repeat(20, 1fr);
             gap: 1px;
             width: 100%;
             height: 100%;
@@ -129,7 +129,7 @@
 
         .tile { 
             width: 100%; 
-            min-height: 20px; /* タップしやすさを確保 */
+            min-height: 20px;
             cursor: crosshair; 
         }
 
